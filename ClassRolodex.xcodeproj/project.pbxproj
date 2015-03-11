@@ -13,6 +13,9 @@
 		D0114D771AAA6F520026542B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0114D761AAA6F520026542B /* Images.xcassets */; };
 		D0114D7A1AAA6F520026542B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0114D781AAA6F520026542B /* LaunchScreen.xib */; };
 		D0114D861AAA6F530026542B /* ClassRolodexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0114D851AAA6F530026542B /* ClassRolodexTests.swift */; };
+		D0114D951AAA7D530026542B /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0114D941AAA7D530026542B /* Person.swift */; };
+		D0C3F1CC1AAF5C4200898126 /* profile_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C3F1CB1AAF5C4200898126 /* profile_placeholder.png */; };
+		D0D9CB521AAFD61B009BA968 /* PersonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D9CB511AAFD61B009BA968 /* PersonDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		D0114D7F1AAA6F530026542B /* ClassRolodexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClassRolodexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0114D841AAA6F530026542B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0114D851AAA6F530026542B /* ClassRolodexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassRolodexTests.swift; sourceTree = "<group>"; };
+		D0114D941AAA7D530026542B /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		D0C3F1CB1AAF5C4200898126 /* profile_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_placeholder.png; sourceTree = "<group>"; };
+		D0D9CB511AAFD61B009BA968 /* PersonDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersonDetailViewController.swift; path = ../PersonDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,7 @@
 		D0114D611AAA6F520026542B = {
 			isa = PBXGroup;
 			children = (
+				D0C3F1CB1AAF5C4200898126 /* profile_placeholder.png */,
 				D0114D6C1AAA6F520026542B /* ClassRolodex */,
 				D0114D821AAA6F530026542B /* ClassRolodexTests */,
 				D0114D6B1AAA6F520026542B /* Products */,
@@ -77,8 +84,10 @@
 		D0114D6C1AAA6F520026542B /* ClassRolodex */ = {
 			isa = PBXGroup;
 			children = (
+				D0114D931AAA7D240026542B /* Controller */,
+				D0114D921AAA7D1E0026542B /* View */,
+				D0114D911AAA7D150026542B /* Model */,
 				D0114D6F1AAA6F520026542B /* AppDelegate.swift */,
-				D0114D711AAA6F520026542B /* ViewController.swift */,
 				D0114D731AAA6F520026542B /* Main.storyboard */,
 				D0114D761AAA6F520026542B /* Images.xcassets */,
 				D0114D781AAA6F520026542B /* LaunchScreen.xib */,
@@ -110,6 +119,30 @@
 				D0114D841AAA6F530026542B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D0114D911AAA7D150026542B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D0114D921AAA7D1E0026542B /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		D0114D931AAA7D240026542B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D0D9CB511AAFD61B009BA968 /* PersonDetailViewController.swift */,
+				D0114D711AAA6F520026542B /* ViewController.swift */,
+				D0114D941AAA7D530026542B /* Person.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +194,7 @@
 				TargetAttributes = {
 					D0114D691AAA6F520026542B = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = QWRJC78833;
 					};
 					D0114D7E1AAA6F530026542B = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -193,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0114D751AAA6F520026542B /* Main.storyboard in Resources */,
+				D0C3F1CC1AAF5C4200898126 /* profile_placeholder.png in Resources */,
 				D0114D7A1AAA6F520026542B /* LaunchScreen.xib in Resources */,
 				D0114D771AAA6F520026542B /* Images.xcassets in Resources */,
 			);
@@ -212,8 +247,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D9CB521AAFD61B009BA968 /* PersonDetailViewController.swift in Sources */,
 				D0114D721AAA6F520026542B /* ViewController.swift in Sources */,
 				D0114D701AAA6F520026542B /* AppDelegate.swift in Sources */,
+				D0114D951AAA7D530026542B /* Person.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,9 +373,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ClassRolodex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -346,9 +386,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ClassRolodex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -405,6 +448,7 @@
 				D0114D8B1AAA6F530026542B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D0114D8C1AAA6F530026542B /* Build configuration list for PBXNativeTarget "ClassRolodexTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +457,7 @@
 				D0114D8E1AAA6F530026542B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
