@@ -29,8 +29,7 @@ class Person {
         // reinitialize the properties with the constructor parameters.
         self.myFirstName = firstName
         self.myLastName = lastName
-        
-        // myImage = NSURL.fileURLWithPath(NSBundle.mainBundle().pathForResource("movie_quote", ofType: "mp3")
+
     }
 
     // method returning the Person object first name property.

@@ -43,6 +43,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         // this is the delegate for the table
         self.myMainTableView.delegate = self
+        
+        //        // hey bundle, look through our main bundle and look for a plist with the name "People"
+        //        let filePath = NSBundle.mainBundle().pathForResource("People", ofType: "plist")
+        //
+        //        // must unwrap our optionals!!!!
+        //        println(filePath!)
+        
+        // optional binding at work also known as an "if let"
+        if let filePath = NSBundle.mainBundle().pathForResource("People", ofType: "plist") {
+            
+            println(filePath)
+            
+            if let plistArray = NSArray(contentsOfFile: filePath) {
+                println(plistArray.count)
+            }
+        }
+        
+        
+        
+        
     }
     // how many rows to prepare in the table view
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,20 +73,37 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // what is to be placed in a cell for the table view.
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell =
+        
         // label the reuse indentifer with the name of the first cell in the table.
         
         //step 1 dequeue an available cell
         // the string is the identifier from the cell we added to the table in the storyboard.
         // "as" casts the cell object as a UITableViewCell
-        self.myMainTableView.dequeueReusableCellWithIdentifier("myFirstCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = self.myMainTableView.dequeueReusableCellWithIdentifier("myFirstCell", forIndexPath: indexPath) as PersonCell
         
-        // step 2 give me the object at the index (whatever index we are at) and assign it to the person
-        let name = myGhostbusters[indexPath.row].getFirstName()
+        // will need to cast this as a PersonCell.
         
-        // assign the information to the cell.
-        cell.textLabel?.text = name
+        // step 2 give me the Person object at the index (whatever index we are at) and assign it to a person placeholder
         
+        let thePersonToDisplay = myGhostbusters[indexPath.row]
+        
+        // assign the information to the cell from the temp Person object.
+        cell.myCellFirstName.text = thePersonToDisplay.getFirstName()
+        
+        // assign the information to the cell from the temp Person object.
+        cell.myCellLastName.text = thePersonToDisplay.getLastName()
+        
+        
+        /* This is a logic sequence to determine if the Person has an image attached to it
+         * then reveal that image in the tableview, otherwise if there is no image currently
+         * attached to the Person object use the default image.  *** reset to the silouette.
+         */
+        
+        if thePersonToDisplay.myImage != nil {
+            cell.myCellImageView.image = thePersonToDisplay.myImage
+        } else {
+            cell.myCellImageView.image = UIImage(named: "seahawks.png")
+        }
         // return the cell.
         return cell
     }
@@ -92,6 +129,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }  
+    }
 }
 
