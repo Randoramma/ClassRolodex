@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
-class Person {
+
+// must be a subclass of NSObject to be NSCoding compliant.
+class Person : NSObject, NSCoding{
     
     // the first name of the person object.
     var myFirstName : String = "John"
@@ -47,6 +49,28 @@ class Person {
         return "First: \(getFirstName()). Last:  \(getLastName())."
         
     }
+    
+    required init (coder aDecoder: NSCoder) {
+        self.myFirstName = aDecoder.decodeObjectForKey("myFirstName") as String
+        
+        
+        self.myLastName = aDecoder.decodeObjectForKey("myLastName") as String
+ 
+        
+        if let image = aDecoder.decodeObjectForKey ("myImage") as? UIImage {
+            
+        }
+        
+        
+    }
+    
+    
+    func func encodeWithCoder(aCoder: NSCoder) {
+        
+    }
+    
+    
+    
     
 }
 
