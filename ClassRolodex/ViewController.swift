@@ -12,18 +12,8 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     // properties
     
-    //    // people in the array.
-    //    let ray =  Person(firstName: "Ray", lastName: "Stantz")
-    //    let peter = Person(firstName: "Peter", lastName: "Venkman")
-    //    let egon = Person(firstName: "Egon", lastName: "Spengler")
-    //    let winston = Person(firstName: "Winston", lastName: "Zeddemore")
-    //    let louis = Person(firstName: "Louis", lastName: "Tully")
-    
     // instantiate the the array.
-    var myGhostbusters = [Person]()
-    
-    // instantiate the iterator
-    var myIterator = 0
+    var myContacts = [Person]()
     
     // out storyboard table reference
     @IBOutlet weak var myMainTableView: UITableView!
@@ -64,78 +54,52 @@ class ViewController: UIViewController, UITableViewDataSource {
         self.loadFromArchive()
         
         // populate the contacts list array
-        if self.myGhostbusters.isEmpty {
-            
-            if let filePath = NSBundle.mainBundle().pathForResource("People", ofType: "plist") {
-                
-                
-                
-                
-            }
-            //        // add person objects created in this class to the array.
-            //        myGhostbusters += [ray, peter, egon, winston, louis]
-            //
-            //        // this is the datasource for the table
-            //        self.myMainTableView.dataSource = self
-            //
-            //        // this is the delegate for the table
-            //        self.myMainTableView.delegate = self
-            
-            //        // hey bundle, look through our main bundle and look for a plist with the name "People"
-            //        let filePath = NSBundle.mainBundle().pathForResource("People", ofType: "plist")
-            //
-            //        // must unwrap our optionals!!!!
-            //        println(filePath!)
+        if self.myContacts.isEmpty {
             
             /* optional binding at work also known as an "if let"
             We search the main bundle for our plist File entitled People.plist where we can find our prebuilt
             array of people dictionaries containing their data (firstName, lastName) and then make a person
             object based on that information for each Dictionary object in the plist.  We then append the
             newly created person object to the end of the array.
-            
-            
             */
+            
             if let filePath = NSBundle.mainBundle().pathForResource("People", ofType: "plist") {
                 
                 if let plistArray = NSArray(contentsOfFile: filePath) {
-                    //println(plistArray.count)
+                    
                     for personObject in plistArray {
                         if let personDictionary = personObject as? NSDictionary {
                             let firstName = personDictionary["firstName"] as String
                             let lastName = personDictionary["lastName"] as String
                             let person = Person(firstName: firstName, lastName: lastName)
-                            self.myGhostbusters.append(person)
+                            self.myContacts.append(person)
                         }// if let into Plist.
                     }// for in loop
                     
                 }// if let going through populated plist.
                 
-                
-            }//
-            //
-            //            if let plistArray = NSArray(contentsOfFile: filePath) {
-            //                println(plistArray.count)
-            //            }
-            //
+            }//if let
+            
             // save our prebuilt list of contacts to the archive.
             self.saveToArchive()
-        }
-        
-    }
+        }   // if self array is empty
+    } // viewDidLoad
     
+    // lifecycle function occuring
     override func viewWillAppear (animated : Bool) {
         super.viewWillAppear(animated)
+        self.saveToArchive()
         self.myMainTableView.reloadData()
         
         
-    }
+    }// viewWillAppear
     
     
     // how many rows to prepare in the table view
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // return the number of rows to the tableView.
-        return self.myGhostbusters.count
+        return self.myContacts.count
     }
     
     // what is to be placed in a cell for the table view.
@@ -152,7 +116,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         
         // step 2 give me the Person object at the index (whatever index we are at) and assign it to a person placeholder
         
-        let thePersonToDisplay = myGhostbusters[indexPath.row]
+        let thePersonToDisplay = myContacts[indexPath.row]
         
         // assign the information to the cell from the temp Person object.
         cell.myCellFirstName.text = thePersonToDisplay.getFirstName()
@@ -173,8 +137,9 @@ class ViewController: UIViewController, UITableViewDataSource {
         }
         // return the cell.
         return cell
-    }
+    } // tableView cellForRowAtIndex
     
+    // method providing activity occuring just prior to segue with PDVC.  
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "UIStoryboardSegue" {
             
@@ -186,23 +151,23 @@ class ViewController: UIViewController, UITableViewDataSource {
             //asking the table view for the selected index path, because we need to know which row they clicked on
             let indexPath = self.myMainTableView.indexPathForSelectedRow()
             //figures out which person they clicked on
-            let person = self.myGhostbusters[indexPath!.row]
+            let person = self.myContacts[indexPath!.row]
             //passing the person to our destination view controller
             destinationVC.selectedPerson = person
             destinationVC.title = person.getFirstName()
         }
-    }
+    } // prepareForSegue
     
     // method to pull Contacts list plist file from the Archive Doc
     func loadFromArchive() {
         // finding the path for where the archive file is currently located.
         let path = getDocumentsPath()
         // pull out the array from the plist as an array of Persons
-        let arrayFromArchive = NSKeyedUnarchiver.unarchiveObjectWithFile(path + "/myArchive") as [Person]
+        let arrayFromArchive = NSKeyedUnarchiver.unarchiveObjectWithFile (path + "/MyArchive") as [Person]
         // set our array iteration of persons to equal the archive list.
-        self.myGhostbusters = arrayFromArchive
+        self.myContacts = arrayFromArchive
         
-    }
+    } // loadFromArchive
     
     // method to save the current list of contacts to the Archive Doc.
     func saveToArchive() {
@@ -210,8 +175,8 @@ class ViewController: UIViewController, UITableViewDataSource {
         let path = self.getDocumentsPath()
         
         // what is the plist object we will make and rename it here..
-        NSKeyedArchiver.archiveRootObject(self.myGhostbusters, toFile: path + "/myArchive")
-    }
+        NSKeyedArchiver.archiveRootObject(self.myContacts, toFile: path + "/myArchive")
+    } // saveToArchive
     
     //
     func getDocumentsPath() -> String {
@@ -221,7 +186,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         let path = paths.first as String
         return path
         
-    }
+    } // getDocumentsPath
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -8,28 +8,41 @@
 
 import UIKit
 
-class PersonDetailViewController:  UIViewController, UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-
+class PersonDetailViewController:  UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    // properties
+    
+    //textLabel recording the first Name of the person.
     @IBOutlet weak var firstNameLabel: UITextField!
+    
+    //textLabel recording the last Name of the person.
     @IBOutlet weak var lastNameLabel: UITextField!
     
+    //textLabel recording an image representation of the person.
     @IBOutlet weak var imageView: UIImageView!
     
+    // instantiation of a person object to record the contact's properties.
     var selectedPerson = Person(firstName: "Dummy", lastName:"Dummy")
     
+    // setup
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = self.selectedPerson.getFirstName()
-        self.firstNameLabel.delegate = self
+        // record the title of the VC based on the current contacts first name.
+        title = self.selectedPerson.getFirstName()
         
-        if self.selectedPerson.myImage != nil {
-            self.imageView.image
-         = self.selectedPerson.myImage
+        //
+        firstNameLabel.delegate = self
+        
+        //if there is already an image for the current person object
+        if selectedPerson.myImage != nil {
+            // set the image view to that
+            imageView.image = self.selectedPerson.myImage
             
-        }
+        }// else do nothing.
         
     }
     
+    // post setup
     override func viewWillAppear (animated: Bool) {
         
         firstNameLabel.text = self.selectedPerson.getFirstName()
@@ -40,8 +53,8 @@ class PersonDetailViewController:  UIViewController, UITextFieldDelegate,UIImage
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.selectedPerson.myFirstName = self.firstNameLabel.text
-        self.selectedPerson.myLastName = self.lastNameLabel.text
+        selectedPerson.myFirstName = self.firstNameLabel.text
+        selectedPerson.myLastName = self.lastNameLabel.text
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -71,8 +84,8 @@ class PersonDetailViewController:  UIViewController, UITextFieldDelegate,UIImage
     func imagePickerController (picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         
         let image = info[UIImagePickerControllerOriginalImage] as UIImage
-        self.imageView.image = image
-        self.selectedPerson.myImage = image
+        imageView.image = image
+        selectedPerson.myImage = image
         
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
