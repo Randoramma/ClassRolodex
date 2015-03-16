@@ -38,13 +38,13 @@ class Person : NSObject, NSCoding{
     // required constructor of a NSCoder subclass with its biolerplate
     required init (coder aDecoder: NSCoder) {
         
-        myFirstName = aDecoder.decodeObjectForKey("myFirstName") as String
+        myFirstName = aDecoder.decodeObjectForKey("firstName") as String
         
         
-        myLastName = aDecoder.decodeObjectForKey("myLastName") as String
+        myLastName = aDecoder.decodeObjectForKey("lastName") as String
         
         
-        if let image = aDecoder.decodeObjectForKey ("myImage") as? UIImage {
+        if let image = aDecoder.decodeObjectForKey ("image") as? UIImage {
             myImage = image
         }
         

@@ -23,7 +23,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         // added a title to the table view page.
         self.title = "Home"
-        
+        self.myMainTableView.dataSource = self
         
         // setting up the user default basic preferences forin the NSDefaultslibrary.
         let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -41,8 +41,9 @@ class ViewController: UIViewController, UITableViewDataSource {
             let newCount = count + 1
             userDefaults.setObject(newCount, forKey: "launchCount")
             
+            // load this view Controller archive data file from memor
+            
         } else {
-            println("first launch!")
             let count = 1
             userDefaults.setObject(count, forKey: "launchCount")
         }
@@ -50,7 +51,6 @@ class ViewController: UIViewController, UITableViewDataSource {
         // now is a good time to save the current status to the Archive Doc.
         userDefaults.synchronize()
         
-        // load this view Controller archive data file from memory
         self.loadFromArchive()
         
         // populate the contacts list array
@@ -67,6 +67,12 @@ class ViewController: UIViewController, UITableViewDataSource {
                 
                 if let plistArray = NSArray(contentsOfFile: filePath) {
                     
+                    /*
+                    Note: The keys from the dictionary you are pulling the data from must
+                    match exactly the property names you are instantiating for the new
+                    object you are creating or else the imported object info will not
+                    be transferred.
+                    */
                     for personObject in plistArray {
                         if let personDictionary = personObject as? NSDictionary {
                             let firstName = personDictionary["firstName"] as String
@@ -82,7 +88,10 @@ class ViewController: UIViewController, UITableViewDataSource {
             
             // save our prebuilt list of contacts to the archive.
             self.saveToArchive()
-        }   // if self array is empty
+        }
+        else {
+            
+        } // if self array is empty
     } // viewDidLoad
     
     // lifecycle function occuring
@@ -97,14 +106,14 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     // how many rows to prepare in the table view
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+
         // return the number of rows to the tableView.
         return self.myContacts.count
     }
     
     // what is to be placed in a cell for the table view.
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+
         // label the reuse indentifer with the name of the first cell in the table.
         
         //step 1 dequeue an available cell
@@ -123,24 +132,25 @@ class ViewController: UIViewController, UITableViewDataSource {
         
         // assign the information to the cell from the temp Person object.
         cell.myCellLastName.text = thePersonToDisplay.getLastName()
-        
+
         
         /* This is a logic sequence to determine if the Person has an image attached to it
         * then reveal that image in the tableview, otherwise if there is no image currently
         * attached to the Person object use the default image.  *** reset to the silouette.
         */
-        
         if thePersonToDisplay.myImage != nil {
             cell.myCellImageView.image = thePersonToDisplay.myImage
         } else {
             cell.myCellImageView.image = UIImage(named: "profile_placeholder.png")
         }
         // return the cell.
+        
         return cell
     } // tableView cellForRowAtIndex
     
-    // method providing activity occuring just prior to segue with PDVC.  
+    // method providing activity occuring just prior to segue with PDVC.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
         if segue.identifier == "UIStoryboardSegue" {
             
             let destinationVC = segue.destinationViewController as PersonDetailViewController
@@ -163,9 +173,14 @@ class ViewController: UIViewController, UITableViewDataSource {
         // finding the path for where the archive file is currently located.
         let path = getDocumentsPath()
         // pull out the array from the plist as an array of Persons
-        let arrayFromArchive = NSKeyedUnarchiver.unarchiveObjectWithFile (path + "/MyArchive") as [Person]
-        // set our array iteration of persons to equal the archive list.
-        self.myContacts = arrayFromArchive
+        
+        
+        // using optional binding to pull the list of Persons from the archive file into the temporary variable.  We downcast this to a person
+        // object and attempt to (if available) append this to our contacts file.
+        if let arrayFromArchive: Person = NSKeyedUnarchiver.unarchiveObjectWithFile (path + "/MyArchive") as? Person {
+            // set our array iteration of persons to equal the archive list.
+            self.myContacts.append(arrayFromArchive)
+        }
         
     } // loadFromArchive
     
